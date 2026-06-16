@@ -1,8 +1,14 @@
-import React from "react";
+import { useState } from "react";
 import { FacebookTitle } from "../icons";
 import Register from "./Register";
 
 function Login() {
+  const [resetForm, setResetForm] = useState(true);
+
+  const hdlClose = () => {
+    setResetForm((prv) => !prv); //setResetForm(!resetForm)
+    console.log("Register form close");
+  };
   return (
     <>
       <div className="h-[700px] pt-20 pb-28 bg-[#f2f4f7]">
@@ -20,7 +26,7 @@ function Login() {
           </div>
           <div className="flex flex-1">
             <div className="card bg-base-100 w-full h-[350px] shadow-xl mt-8">
-              <form>
+              <form onSubmit={(e) => e.preventDefault()}>
                 <div className="card-body gap-3 p-4">
                   <input
                     type="text"
@@ -52,9 +58,9 @@ function Login() {
           </div>
         </div>
       </div>
-      <dialog id="register-form" className="modal">
+      <dialog id="register-form" className="modal" onClose={hdlClose}>
         <div className="modal-box">
-          <Register />
+          <Register resetForm={resetForm} />
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕

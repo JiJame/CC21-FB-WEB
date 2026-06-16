@@ -4,8 +4,9 @@ import { registerSchema } from "../validation/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useEffect } from "react";
 
-function Register() {
+function Register({ resetForm }) {
   const { handleSubmit, register, formState, reset } = useForm({
     // resolver: yupResolver(registerSchema),
     resolver: zodResolver(registerSchema),
@@ -13,6 +14,9 @@ function Register() {
   });
   //   console.log(register("testname"));
   const { isSubmitting, errors } = formState;
+  useEffect(() => {
+    reset();
+  }, [resetForm]);
 
   //   const onSubmit = (data) => {
   //     alert(JSON.stringify(data, null, 2));
@@ -23,11 +27,12 @@ function Register() {
   const onSubmit = async (data) => {
     try {
       const resp = await axios.post(
-        "http://localhost:8899/api/auth/register",
+        "http://localhost:8899/api/auth/registe",
         data,
       );
-      toast.success(resp.data.msg);
+      alert(resp.data?.message);
       document.getElementById("register-form").close();
+      reset();
     } catch (err) {
       console.log(err);
       const errMsg = err.response?.data?.error || err.message;
