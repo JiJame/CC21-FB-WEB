@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FacebookTitle } from "../icons";
-import Register from "./Register";
+import RegisterForm from "./RegisterForm";
 
 function Login() {
   const [resetForm, setResetForm] = useState(true);
@@ -60,9 +60,12 @@ function Login() {
       </div>
       <dialog id="register-form" className="modal" onClose={hdlClose}>
         <div className="modal-box">
-          <Register resetForm={resetForm} />
+          <RegisterForm resetForm={resetForm} />
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              // type="button"
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
               ✕
             </button>
           </form>
