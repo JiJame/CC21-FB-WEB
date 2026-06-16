@@ -27,10 +27,10 @@ function Register({ resetForm }) {
   const onSubmit = async (data) => {
     try {
       const resp = await axios.post(
-        "http://localhost:8899/api/auth/registe",
+        "http://localhost:8899/api/auth/register",
         data,
       );
-      alert(resp.data?.message);
+      toast.success(resp.data?.message);
       document.getElementById("register-form").close();
       reset();
     } catch (err) {
