@@ -36,7 +36,7 @@ const userRouter = createBrowserRouter([
 
 function AppRouter() {
   const user = useUserStore((state) => state.user);
-
+  // const user = true;
   const finalRouter = user ? userRouter : guestRouter;
   return (
     <Suspense fallback={<div>Loading ...</div>}>

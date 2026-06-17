@@ -11,6 +11,7 @@ import {
   ShopIcon,
 } from "../icons";
 import useUserStore from "../stores/userStore";
+import Avatar from "./Avatar";
 
 function Header() {
   const user = useUserStore((state) => state.user);
@@ -72,12 +73,13 @@ function Header() {
           </div>
         </div>
         <div className="dropdown dropdown-end ">
-          <div tabIndex={0} role="button" className="btn m-1">
-            <div className="avatar w-7">
-              <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring-2 ring-offset-2">
-                <img src={user.profileImage} />
-              </div>
-            </div>
+          <div tabIndex={0} role="button" className="btn m-1 btn-circle">
+            <Avatar
+              imgSrc={user.profileImage}
+              menu
+              bottom="-9px"
+              className="w-[28px]"
+            />
           </div>
           <ul
             tabIndex="-1"
@@ -96,9 +98,6 @@ function Header() {
           </ul>
         </div>
       </div>
-
-      {/* <p className="text-xl">Hello, {user.firstName}</p>
-			<button className="btn" onClick={logout}>Logout</button> */}
     </div>
   );
 }

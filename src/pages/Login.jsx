@@ -5,6 +5,7 @@ import { loginSchema } from "../validation/schema";
 import { toast } from "react-toastify";
 import { FacebookTitle } from "../icons";
 import RegisterForm from "./RegisterForm";
+import { authApi } from "../api/authApi";
 
 function Login() {
   const [resetForm, setResetForm] = useState(true); //for reset RegisterForm
