@@ -2,7 +2,6 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "../validation/schema";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { FacebookTitle } from "../icons";
 import RegisterForm from "./RegisterForm";
@@ -20,6 +19,7 @@ function Login() {
 
   const onSubmit = async (data) => {
     try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       const resp = await authApi.post("/login", data);
       toast.success(resp.data.message);
       toast.info(JSON.stringify(resp.data, null, 2));
@@ -47,44 +47,50 @@ function Login() {
           <div className="flex flex-1">
             <div className="card bg-base-100 w-full min-h-[350px] shadow-xl mt-8">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="card-body gap-3 p-4">
-                  <div className="w-full">
-                    <input
-                      type="text"
-                      className="input w-full"
-                      placeholder="E-mail or Phone number"
-                      {...register("identity")}
-                    />
-                    <p className="text-sm text-error">
-                      {errors.identity?.message}
+                <fieldset disabled={isSubmitting}>
+                  <div className="card-body gap-3 p-4">
+                    <div className="w-full">
+                      <input
+                        type="text"
+                        className="input w-full"
+                        placeholder="E-mail or Phone number"
+                        {...register("identity")}
+                      />
+                      <p className="text-sm text-error">
+                        {errors.identity?.message}
+                      </p>
+                    </div>
+                    <div className="w-full">
+                      <input
+                        type="password"
+                        className="input w-full"
+                        placeholder="password"
+                        {...register("password")}
+                      />
+                      <p className="text-sm text-error">
+                        {errors.password?.message}
+                      </p>
+                    </div>
+                    <button className="btn btn-primary text-xl">
+                      Login
+                      {isSubmitting && (
+                        <span className="loading loading-dots loading-sm"></span>
+                      )}
+                    </button>
+                    <p className="text-center cursor-pointer opacity-75">
+                      Forgotten password?
                     </p>
+                    <div className="divider"></div>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() =>
+                        document.getElementById("register-form").showModal()
+                      }
+                    >
+                      Create new account
+                    </button>
                   </div>
-                  <div className="w-full">
-                    <input
-                      type="password"
-                      className="input w-full"
-                      placeholder="password"
-                      {...register("password")}
-                    />
-                    <p className="text-sm text-error">
-                      {errors.password?.message}
-                    </p>
-                  </div>
-                  <button className="btn btn-primary text-xl">Login</button>
-                  <p className="text-center cursor-pointer opacity-70">
-                    Forgotten password?
-                  </p>
-                  <div className="divider my-0"></div>
-                  <button
-                    className="btn btn-secondary text-lg text-white mx-auto"
-                    type="button"
-                    onClick={() =>
-                      document.getElementById("register-form").showModal()
-                    }
-                  >
-                    Create new account
-                  </button>
-                </div>
+                </fieldset>
               </form>
             </div>
           </div>
