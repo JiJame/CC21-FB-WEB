@@ -12,7 +12,7 @@ function RegisterForm({ resetForm }) {
     resolver: zodResolver(registerSchema),
     mode: "onSubmit",
   });
-  //   console.log(register("testname"));
+  // console.log(register("testname"));
   const { isSubmitting, errors } = formState;
   useEffect(() => {
     console.log("test");
