@@ -14,7 +14,7 @@ import {
 function SidebarMenu() {
   const user = useUserStore((state) => state.user);
   return (
-    <div className="fixed top-14 h-full w-[350px] pt-2 overflow-auto flex flex-col gap-2 min-w[220px]">
+    <div className="fixed top-14 h-full w-[350px] pt-2 overflow-auto flex flex-col gap-2 min-w[220px] max-xl:hidden">
       <Link to="/profile">
         <MenuItem
           icon={Avatar}
