@@ -5,6 +5,8 @@ import {
   Outlet,
   RouterProvider,
 } from "react-router";
+import useUserStore from "../stores/userStore";
+import UserLayout from "../layouts/UserLayout";
 // import Login from "../pages/Login";
 // import Home from "../pages/Home";
 // import Friends from "../pages/Friends";
@@ -15,32 +17,29 @@ const Friends = lazy(() => import("../pages/Friends"));
 const Profile = lazy(() => import("../pages/Profile"));
 
 const guestRouter = createBrowserRouter([
-  { path: "/", Component: Login },
+  { path: "/", element: <Login /> },
   { path: "*", element: <Navigate to="/" /> },
 ]);
+
 const userRouter = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <>
-        <p className="py-4 border">Header</p>
-        <Outlet />
-      </>
-    ),
+    element: <UserLayout />,
     children: [
-      { path: "", Component: Home },
-      { path: "friends", Component: Friends },
-      { path: "profile", Component: Profile },
+      { index: true, element: <Home /> },
+      { path: "friends", element: <Friends /> },
+      { path: "profile", element: <Profile /> },
       { path: "*", element: <Navigate to="/" /> },
     ],
   },
 ]);
+
 function AppRouter() {
-  const user = null; // also test with user = 'andy@ggg.mail'
+  const user = useUserStore((state) => state.user);
   const finalRouter = user ? userRouter : guestRouter;
   return (
     <Suspense fallback={<div>Loading ...</div>}>
-      <RouterProvider router={finalRouter} />
+      <RouterProvider key={user?.id} router={finalRouter} />
     </Suspense>
   );
 }
