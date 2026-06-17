@@ -1,6 +1,6 @@
 import React from "react";
 
-function Friend() {
+function Friends() {
   return <div>Friends</div>;
 }
 
