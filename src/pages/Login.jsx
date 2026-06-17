@@ -6,6 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FacebookTitle } from "../icons";
 import RegisterForm from "./RegisterForm";
+import { authApi } from "../api/authApi";
 
 function Login() {
   const [resetForm, setResetForm] = useState(true); //for reset RegisterForm
@@ -19,10 +20,7 @@ function Login() {
 
   const onSubmit = async (data) => {
     try {
-      const resp = await axios.post(
-        "http://localhost:8899/api/auth/login",
-        data,
-      );
+      const resp = await authApi.post("/login", data);
       toast.success(resp.data.message);
       toast.info(JSON.stringify(resp.data, null, 2));
     } catch (err) {
