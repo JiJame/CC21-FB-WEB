@@ -3,11 +3,43 @@ import { PhotoIcon2 } from "../icons";
 import useUserStore from "../stores/userStore";
 import Avatar from "./Avatar";
 import AddPicture from "./AddPicture";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function PostForm() {
   const user = useUserStore((state) => state.user);
+  const token = useUserStore((state) => state.token);
   const [addPic, setAddPic] = useState(false);
   const [file, setFile] = useState(null);
+  const [message, setMessage] = useState("");
+
+  const hdlCreatePost = async () => {
+    let imageUrl = "";
+    try {
+      // upload file ไปที่ cloudinary => ได้ secure_url
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "cc21-upload");
+        const resp = await axios.post(
+          "https://api.cloudinary.com/v1_1/tratchapong/image/upload",
+          formData,
+        );
+        imageUrl = resp.data.secure_url;
+      }
+      // เอา secure_url ที่ได้รวมเป็น body ส่งให้ backend /api/post {message, image}
+      const body = { message: message, image: imageUrl };
+      const resp = await axios.post("http://localhost:8899/api/post", body, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success(resp.data.message);
+      document.getElementById("postform-modal").close();
+    } catch (err) {
+      console.log(err);
+      const errMsg = err.response?.data.error || err.message;
+      toast.error(errMsg);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -31,6 +63,8 @@ function PostForm() {
       <textarea
         className="textarea textarea-ghost w-full"
         placeholder={`what do you think? ${user.firstName}`}
+        onChange={(e) => setMessage(e.target.value)}
+        value={message}
       ></textarea>
       {addPic && <AddPicture file={file} setFile={setFile} />}
       <div className="flex border rounded-lg p-2 justify-between items-center">
@@ -43,7 +77,9 @@ function PostForm() {
           <PhotoIcon2 className="w-7" />
         </div>
       </div>
-      <button className="btn btn-sm btn-primary">Create Post</button>
+      <button className="btn btn-sm btn-primary" onClick={hdlCreatePost}>
+        Create Post
+      </button>
     </div>
   );
 }
