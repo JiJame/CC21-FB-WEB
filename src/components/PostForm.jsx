@@ -7,6 +7,7 @@ import AddPicture from "./AddPicture";
 function PostForm() {
   const user = useUserStore((state) => state.user);
   const [addPic, setAddPic] = useState(false);
+  const [file, setFile] = useState(null);
 
   return (
     <div className="flex flex-col gap-2">
@@ -31,7 +32,7 @@ function PostForm() {
         className="textarea textarea-ghost w-full"
         placeholder={`what do you think? ${user.firstName}`}
       ></textarea>
-      {addPic && <AddPicture />}
+      {addPic && <AddPicture file={file} setFile={setFile} />}
       <div className="flex border rounded-lg p-2 justify-between items-center">
         <p>add with your post</p>
         <div
