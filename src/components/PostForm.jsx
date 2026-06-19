@@ -22,7 +22,7 @@ function PostForm() {
         formData.append("file", file);
         formData.append("upload_preset", "cc21-upload");
         const resp = await axios.post(
-          "https://api.cloudinary.com/v1_1/tratchapong/image/upload",
+          "https://api.cloudinary.com/v1_1/jamejirapat/image/upload",
           formData,
         );
         imageUrl = resp.data.secure_url;
@@ -35,7 +35,6 @@ function PostForm() {
       toast.success(resp.data.message);
       document.getElementById("postform-modal").close();
     } catch (err) {
-      console.log(err);
       const errMsg = err.response?.data.error || err.message;
       toast.error(errMsg);
     }
