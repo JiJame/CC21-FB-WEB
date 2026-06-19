@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import useUserStore from "../stores/userStore";
 import CreatePost from "./CreatePost";
 import axios from "axios";
+import usePostStore from "../stores/postStore";
 
 function PostContainer() {
   const token = useUserStore((state) => state.token);
   const [allPosts, setAllPosts] = useState([]);
+  const posts = usePostStore((state) => state.posts);
 
   useEffect(() => {
     axios
@@ -20,8 +22,8 @@ function PostContainer() {
   return (
     <div className="w-[680px] mx-auto min-h-screen my-3 flex flex-col gap-4 rounded-lg bg-amber-200">
       <CreatePost />
-
-      {allPosts.map((post) => (
+      {JSON.stringify(posts, null, 2)}
+      {/* {allPosts.map((post) => (
         <div className="card bg-base-100">
           <div key={post.id} className="card bg-base-100">
             <p>
@@ -32,7 +34,7 @@ function PostContainer() {
             <div className="divider"></div>
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }
