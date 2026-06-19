@@ -4,7 +4,6 @@ import CreatePost from "./CreatePost";
 import axios from "axios";
 
 function PostContainer() {
-  const user = useUserStore((state) => state.user);
   const token = useUserStore((state) => state.token);
   const [allPosts, setAllPosts] = useState([]);
 
