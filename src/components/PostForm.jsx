@@ -10,7 +10,7 @@ import usePostStore from "../stores/postStore";
 
 function PostForm() {
   const user = useUserStore((state) => state.user);
-  const token = useUserStore((state) => state.token);
+  // const token = useUserStore((state) => state.token);
   const createPost = usePostStore((state) => state.ActionCreatePost);
   // const getAllPosts = usePostStore((state) => state.ActionGetAllPosts);
   const [addPic, setAddPic] = useState(false);
