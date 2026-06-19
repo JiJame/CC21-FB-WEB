@@ -51,8 +51,11 @@ function PostForm() {
           <div className="text-sm">
             {user.firstName} {user.lastName}
           </div>
-          <select className="select bg-slate-200 select-xs w-full max-w-xs">
-            <option disabled selected>
+          <select
+            className="select bg-slate-200 select-xs w-full max-w-xs"
+            defaultValue=""
+          >
+            <option disabled selected value="">
               who can see?
             </option>
             <option>public</option>

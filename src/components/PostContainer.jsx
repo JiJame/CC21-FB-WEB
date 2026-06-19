@@ -23,7 +23,7 @@ function PostContainer() {
 
       {allPosts.map((post) => (
         <div className="card bg-base-100">
-          <div className="card-body">
+          <div key={post.id} className="card bg-base-100">
             <p>
               {post.user.firstName} {post.user.lastName}
             </p>
