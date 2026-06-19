@@ -12,9 +12,11 @@ function PostForm() {
   const [addPic, setAddPic] = useState(false);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const hdlCreatePost = async () => {
     let imageUrl = "";
+    setLoading(true);
     try {
       // upload file ไปที่ cloudinary => ได้ secure_url
       if (file) {
@@ -33,11 +35,13 @@ function PostForm() {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success(resp.data.message);
+      setLoading(false);
       document.getElementById("postform-modal").close();
       window.location.reload();
     } catch (err) {
       const errMsg = err.response?.data.error || err.message;
       toast.error(errMsg);
+      setLoading(false);
     }
   };
 
@@ -80,8 +84,13 @@ function PostForm() {
           <PhotoIcon2 className="w-7" />
         </div>
       </div>
-      <button className="btn btn-sm btn-primary" onClick={hdlCreatePost}>
+      <button
+        className="btn btn-sm btn-primary"
+        onClick={hdlCreatePost}
+        disabled={loading}
+      >
         Create Post
+        {loading && <span className="loading loading-dots loading-sm"></span>}
       </button>
     </div>
   );

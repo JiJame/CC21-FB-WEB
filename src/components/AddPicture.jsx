@@ -32,7 +32,7 @@ function AddPicture(props) {
           <>
             <img
               src={URL.createObjectURL(file)}
-              className="h-full block mx-auto"
+              className="h-full block mx-auto max-h-[300px] object-contain"
             />
             <button
               className="btn btn-sm btn-circle btn-dash btn-error absolute top-1 right-1 opacity-60"
